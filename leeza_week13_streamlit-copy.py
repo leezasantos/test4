@@ -78,7 +78,7 @@ def get_dataset(selectbar):
     if selectbar == 'Outpatient':
         st.write(outpatient_ny)
         
-st.write(get_dataset(selectbar))
+
 
 ## selectbar https://youtu.be/Klqn--Mu2pE
     
@@ -99,7 +99,7 @@ st.map(hospitals_ny_gps)
 
 
 # Create a list of possible values and multiselect menu with them in it.
-county = hospitals_ny['country_name'].unique()
+county = hospitals_ny['county_name'].unique()
 county_selected = st.multiselect('Select County', county)
 
 # Mask to filter dataframe
