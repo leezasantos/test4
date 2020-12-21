@@ -91,17 +91,14 @@ hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
 st.map(hospitals_ny_gps)
 
 
-#----------Scatterplot----------
-st.subheader('NY Hospitals by County')
-st.markdown('Below is a scatterplot of NY hospitals by county. To view all counties, please enlarge the graph')
-circle0 = hospitals_ny[['hospital_name', 'county_name']]
 
-c0 = alt.Chart(circle0).mark_circle().encode(
-x='county_name', 
-y='hospital_type', 
-size='hospital_type', color='hospital_type', tooltip=['county_name', 'hospital_type'])
+county_name_input = st.sidebar.multiselect(
+'County name',
+hospitals_ny.groupby('County').count().reset_index()['County'].tolist())
+# by country name
+if len(county_name_input) > 0:
+    hospitals_ny = hospitals_ny[hospitals_ny['County'].isin(county_name_input)]
 
-st.altair_chart(c0, use_container_width=True)
 
 
 #----------Pie Chart----------  
