@@ -92,14 +92,6 @@ st.map(hospitals_ny_gps)
 
 
 
-county_name_input = st.sidebar.multiselect(
-'County name',
-hospitals_ny.groupby('County').count().reset_index()['County'].tolist())
-# by country name
-if len(county_name_input) > 0:
-    hospitals_ny = hospitals_ny[hospitals_ny['County'].isin(county_name_input)]
-
-
 
 #----------Pie Chart----------  
 bar4 = hospitals_ny['hospital_type'].value_counts().reset_index()
@@ -109,20 +101,17 @@ st.plotly_chart(fig)
 
 
 #Timeliness of Care
-st.subheader('NY Hospitals - Timelieness of Care')
+st.subheader('NY Hospitals: Timelieness of Care')
 bar5 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
 fig2 = px.bar(bar5, x='index', y='timeliness_of_care_national_comparison')
 st.plotly_chart(fig2)
 
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national\
+st.markdown('Based on the chart above, we can see the majority of hospitals in the NY area fall below the national\
         average as it relates to timeliness of care')
 
 
 #----------Hospital Performance---------- 
 
-# NYU Langone
-# Northwell Health
-# Stony Brook
 
 ## finding their row #: df_hospital_2[df_hospital_2['hospital_name'].str.contains('NORTHWELL')]
 
@@ -140,6 +129,8 @@ st.markdown("""
             Furthermore, we will examine and compare three hospitals, one from each county, NYU Langone located in Manhattan,
             Northwell Hospital located in Nassau County, and Stony Brook University hospital located in Suffolk County.
              """)
+ 
+    
  
 #-------Performance by County-------
 
@@ -235,8 +226,6 @@ st.markdown("""
              """)
  
 
-
-
 performance = df_hospital_2.iloc[[3230, 2487, 2139],:]
 performance = performance[['hospital_name','county_name','hospital_type','mortality_national_comparison','safety_of_care_national_comparison','patient_experience_national_comparison']]
 st.dataframe(performance)
@@ -285,6 +274,7 @@ st.altair_chart(bar1, use_container_width=True)
 costs = inpatient_ny.groupby('provider_name')['average_total_payments'].sum().reset_index()
 costs['average_total_payments'] = costs['average_total_payments'].astype('int64')
 
+st.subheader('Inpatient: Medicare Payments')
 
 costs_medicare = inpatient_ny.groupby('provider_name')['average_medicare_payments'].sum().reset_index()
 costs_medicare['average_medicare_payments'] = costs_medicare['average_medicare_payments'].astype('int64')
@@ -293,12 +283,20 @@ costs_medicare['average_medicare_payments'] = costs_medicare['average_medicare_p
 costs_sum = costs.merge(costs_medicare, how='left', left_on='provider_name', right_on='provider_name')
 costs_sum['delta'] = costs_sum['average_total_payments'] - costs_sum['average_medicare_payments']
 
+#-----Medicare------
 
-st.title('COSTS')
+bar6 = px.bar(costs_sum, x='provider_name', y='average_medicare_payments')
+st.plotly_chart(bar6)
+st.subheader("Average Medicare Payments")
+st.dataframe(costs_sum)
+
+#-----Total------
+
+st.subheader('Inpatient: Average Total Payments')
 
 bar6 = px.bar(costs_sum, x='provider_name', y='average_total_payments')
 st.plotly_chart(bar6)
-st.header("Hospital - ")
+st.subheader("Average Total Payments")
 st.dataframe(costs_sum)
 
 
@@ -335,7 +333,7 @@ bottom10 = common_discharges.tail(10)
 
 
 
-st.header('DRGs')
+st.subheader('DRGs')
 st.dataframe(common_discharges)
 
 
