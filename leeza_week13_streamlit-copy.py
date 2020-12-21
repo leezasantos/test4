@@ -168,25 +168,22 @@ st.plotly_chart(ny_patient_exp)
 
 st.subheader('Nassau')
 
-st.markdown('<font color=‘black’>NEW YORK PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
-nassau_patient = ny['patient_experience_national_comparison'].value_counts().reset_index()
-nassau_patient_exp = px.pie(nassau_patient, values='patient_experience_national_comparison', names='index')
-st.plotly_chart(nassau_patient_exp)
-
-
 st.markdown('<font color=‘black’>NEW YORK COUNTY MORTALITY</font>', unsafe_allow_html=True)
-nassau_mortality = ny['mortality_national_comparison'].value_counts().reset_index()
+nassau_mortality = nassau['mortality_national_comparison'].value_counts().reset_index()
 nassau_mor_pie = px.pie(nassau_mortality, values='mortality_national_comparison', names='index')
 st.plotly_chart(ny_mor_pie)
 
 
 st.markdown('<font color=‘black’>NEW YORK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
-nassau_safety = ny['safety_of_care_national_comparison'].value_counts().reset_index()
-nassau_safety_pie = px.pie(ny_safety, values='safety_of_care_national_comparison', names='index')
+nassau_safety = nassau['safety_of_care_national_comparison'].value_counts().reset_index()
+nassau_safety_pie = px.pie(nassau_safety, values='safety_of_care_national_comparison', names='index')
 st.plotly_chart(nassau_safety_pie)
 
 
-
+st.markdown('<font color=‘black’>NEW YORK PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
+nassau_patient = nassau['patient_experience_national_comparison'].value_counts().reset_index()
+nassau_patient_exp = px.pie(nassau_patient, values='patient_experience_national_comparison', names='index')
+st.plotly_chart(nassau_patient_exp)
 
 
 
@@ -200,10 +197,10 @@ suffolk_mor_pie = px.pie(suffolk_mortality, values='mortality_national_compariso
 st.plotly_chart(suffolk_mor_pie)
 
 
-st.markdown('<font color=‘black’>SUFFOLK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
+st.markdown('<font color=‘black’>NEW YORK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
 suffolk_safety = suffolk['safety_of_care_national_comparison'].value_counts().reset_index()
 suffolk_safety_pie = px.pie(suffolk_safety, values='safety_of_care_national_comparison', names='index')
-st.plotly_chart(suffolk_safety)
+st.plotly_chart(suffolk_safety_pie)
 
 
 st.markdown('<font color=‘black’>SUFFOLK COUNTY PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
