@@ -77,7 +77,7 @@ def get_dataset(selectbar):
     
 #----------Overview of NY Hospitals----------        
 
-st.subheader('Overview')
+st.header('Overview')
 
  
 st.subheader('Map of NY Hospital Locations')
@@ -89,8 +89,6 @@ hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
 hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
 
 st.map(hospitals_ny_gps)
-
-
 
 
 #----------Pie Chart----------  
@@ -115,7 +113,7 @@ st.markdown('Based on the chart above, we can see the majority of hospitals in t
 
 ## finding their row #: df_hospital_2[df_hospital_2['hospital_name'].str.contains('NORTHWELL')]
 
-st.subheader('Hospital Performance New York, Nassau, Suffolk')
+st.header('Hospital Performance New York, Nassau, Suffolk')
 st.markdown("""
             We will be examining the hospital performance of three NY counties: New York - Manhattan, Nassau, and Suffolk County.
             For each county, we will be looking at mortality rate, safety of care, and patient experience compared to nationwide data.
@@ -134,7 +132,7 @@ st.markdown("""
  
 #-------Performance by County-------
 
-st.subheader('Hospital Performance by County')
+st.header('Hospital Performance by County')
 
 ## Prepare data, we will extract data by COUNTY_NAME fron hospitals_ny dataset
 ny = hospitals_ny[hospitals_ny['county_name']=='NEW YORK']
@@ -150,42 +148,78 @@ ny_mortality = ny['mortality_national_comparison'].value_counts().reset_index()
 ny_mor_pie = px.pie(ny_mortality, values='mortality_national_comparison', names='index')
 st.plotly_chart(ny_mor_pie)
 
+st.markdown("""
+            We cannot conclude accurate assumptions based on this chart because mortality averages are not 
+           available for 50% of our sample. However, based on the 50% that we do have available, we can conclude over 1/3rd or 
+           37.5% of New York county hospitals have higher mortality rates than average. 
+            """)
+
 
 st.markdown('<font color=‘black’>NEW YORK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
 ny_safety = ny['safety_of_care_national_comparison'].value_counts().reset_index()
 ny_safety_pie = px.pie(ny_safety, values='safety_of_care_national_comparison', names='index')
 st.plotly_chart(ny_safety_pie)
 
+st.markdown("""
+            This chart suggests that 31.3% of New York county hospitals have lower safety of care than 
+            the national average while 18.8% of New York county hospitals performs above national average
+            in safety of care. 
+            """)
+
 st.markdown('<font color=‘black’>NEW YORK PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
 ny_patient = ny['patient_experience_national_comparison'].value_counts().reset_index()
 ny_patient_exp = px.pie(ny_patient, values='patient_experience_national_comparison', names='index')
 st.plotly_chart(ny_patient_exp)
 
-
-
+st.markdown("""
+            This chart suggests that nearly half of New York county hospitals perform below national average on 
+            patient experience while only 12.5% performs same as average, and 6.25% performs above national average.
+            """)
+            
+st.markdown("""
+            The charts above suggests that New York county hospitals perform poorly on safety of care and patient experience.
+            """)
 
 #---------Nassau--------
 
 st.subheader('Nassau')
 
-st.markdown('<font color=‘black’>NEW YORK COUNTY MORTALITY</font>', unsafe_allow_html=True)
+st.markdown('<font color=‘black’>NASSAU COUNTY MORTALITY</font>', unsafe_allow_html=True)
 nassau_mortality = nassau['mortality_national_comparison'].value_counts().reset_index()
 nassau_mor_pie = px.pie(nassau_mortality, values='mortality_national_comparison', names='index')
 st.plotly_chart(ny_mor_pie)
 
+st.markdown("""
+           We cannot conclude accurate assumptions based on this chart because mortality averages are not 
+           available for 50% of our sample. However, based on the 50% that we do have available, we can conclude over 1/3rd or 
+           37.5% of Nassau county hospitals have higher mortality rates than average. 
+            """)
 
-st.markdown('<font color=‘black’>NEW YORK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
+st.markdown('<font color=‘black’>NASSAU COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
 nassau_safety = nassau['safety_of_care_national_comparison'].value_counts().reset_index()
 nassau_safety_pie = px.pie(nassau_safety, values='safety_of_care_national_comparison', names='index')
 st.plotly_chart(nassau_safety_pie)
 
+st.markdown("""
+            This chart suggests that Nassau county hospitals perform below national average in safety of care,
+            with more than 2/3rds or 77.8% of their hospitals scoring below average on safety of care.
+            """)
 
-st.markdown('<font color=‘black’>NEW YORK PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
+st.markdown('<font color=‘black’>NASSAU PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
 nassau_patient = nassau['patient_experience_national_comparison'].value_counts().reset_index()
 nassau_patient_exp = px.pie(nassau_patient, values='patient_experience_national_comparison', names='index')
 st.plotly_chart(nassau_patient_exp)
 
-
+st.markdown("""
+            From this chart, we can conclude that Nassau county hospitals performs poorly on patient experience, 
+            with roughly 66.7% of Nassau county falling below national average. 
+            """)
+            
+            
+st.markdown("""
+           Based on our charts, we can assume that Nassau county hospitals measures lower in safety or care and
+           patient experience than national average.
+            """)            
 
 #---------Suffolk--------
 
@@ -196,11 +230,23 @@ suffolk_mortality = suffolk['mortality_national_comparison'].value_counts().rese
 suffolk_mor_pie = px.pie(suffolk_mortality, values='mortality_national_comparison', names='index')
 st.plotly_chart(suffolk_mor_pie)
 
+st.markdown("""
+            From this chart, we can assume that roughly 35.7% of Suffolk county hospitals
+            have higher mortality rates when compared nationwide. However, this data cannot be considered reliable as
+            we do not have available data for nearly one third of our sample. 
+             """)
+ 
 
-st.markdown('<font color=‘black’>NEW YORK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
+st.markdown('<font color=‘black’>SUFFOLK COUNTY SAFETY OF CARE</font>', unsafe_allow_html=True)
 suffolk_safety = suffolk['safety_of_care_national_comparison'].value_counts().reset_index()
 suffolk_safety_pie = px.pie(suffolk_safety, values='safety_of_care_national_comparison', names='index')
 st.plotly_chart(suffolk_safety_pie)
+
+st.markdown("""
+            From this chart, 28.6% of Suffolk county hospitals perform above national safety of care average
+            while 28.6% performs below average. This chart cannot conclude accurate safety of care opinion on
+            Suffolk county hospitals as we do not have data for 35.7% of Suffolk county hospitals.
+            """)
 
 
 st.markdown('<font color=‘black’>SUFFOLK COUNTY PATIENT EXPERIENCE</font>', unsafe_allow_html=True)
@@ -208,55 +254,61 @@ suffolk_patient_exp = suffolk['patient_experience_national_comparison'].value_co
 suffolk_pt_pie = px.pie(suffolk_patient_exp, values='patient_experience_national_comparison', names='index')
 st.plotly_chart(suffolk_pt_pie)
 
+st.markdown("""
+            From this chart, roughly 42.9% of Suffolk county hospitals perform below national average on patient experience
+            while the remaining 21.4% only performs the same as national average.
+            """)
 
 
+st.markdown("""
+            From the charts above, we can assume that Suffolk county hospitals perform poorly compared to national averages.
+            """)
 
 
 #----------Comparison---------- 
 
 st.subheader('Comparison of Hospitals by County')
 
-
-st.markdown("""
-            Let's extract one random hospital from each country. In this case, we selected NYU Langone, Northwell Health,
-            and Stony Brook University Hospital
-             """)
+st.markdown('Lets extract one random hospital from each country. In this case, we selected NYU Langone, Northwell Health, and Stony Brook University Hospital.')
  
 
 performance = df_hospital_2.iloc[[3230, 2487, 2139],:]
 performance = performance[['hospital_name','county_name','hospital_type','mortality_national_comparison','safety_of_care_national_comparison','patient_experience_national_comparison']]
 st.dataframe(performance)
 
-
-fig3 = px.bar(performance, x='hospital_name', y='mortality_national_comparison')
-st.plotly_chart(fig3)
-
-
-fig4 = px.bar(performance, x='hospital_name', y='safety_of_care_national_comparison')
-st.plotly_chart(fig3)
-       
-fig4 = px.bar(performance, x='hospital_name', y='patient_experience_national_comparison')
-st.plotly_chart(fig3)    
-
-
-
+st.markdown("""
+            Based on the table above, we can conclude that all three hospitals are acute care hospitals.
+            However, they begin to differ by quality.
+            
+            Lets first compare mortality rates. From this table, we see that NYU Langone and Stony Brook
+            University hospital both have higher mortality rates than national average while Northwell
+            rates about the same as national average. 
+            
+            Next, lets compare safety of care. Both Northwell and Stony Brook University Hospital
+            performs above the national average while NYU Langone performs below national average.
+            
+            Lastly, we have patient experience. Both NYU Langone and Northwell positive patient experience
+            are the same as national average while Stony Brook performs below average.
+            """)
 
 
 #----------Inpatient---------- 
-st.subheader('Inpatient')
+st.header('Inpatient')
+
 
 
 inpatient_ny = df_inpatient_2[df_inpatient_2['provider_state'] == 'NY']
 total_inpatient_count = sum(inpatient_ny['total_discharges'])
 
-st.header('Total Count of Discharges from Inpatient Captured: ' )
-st.header( str(total_inpatient_count) )
+st.subheader('Total Count of Discharges from Inpatient Captured: ' )
+st.subheader( str(total_inpatient_count) )
 
 st.subheader('Top 10 Highest Discharge Rates and Outpatient Services')
 st.markdown('The bar charts below displays inpatient hospitals with the highest discharge rates and outpatient facilities with the highest services in NY.')
 
 df_bar1 = inpatient_ny[['provider_name','total_discharges']]
-source1 = df_bar1[2077:2087]
+sorted = df_bar1.sort_values('total_discharges')  ##sort
+source1 = df_bar1[11247:11257]
  
 bar1 = alt.Chart(source1).mark_bar().encode(
     x='provider_name',
@@ -299,9 +351,14 @@ st.dataframe(costs_sum)
 
 #Costs by Condition and Hospital / Average Total Payments
 costs_condition_hospital = inpatient_ny.groupby(['provider_name', 'drg_definition'])['average_total_payments'].sum().reset_index()
-st.header("Costs by Condition and Hospital - Average Total Payments")
+st.subheader("Costs by Condition and Hospital - Average Total Payments")
 st.dataframe(costs_condition_hospital)
 
+
+st.markdown("""
+           The top 5 inpatient facilities with the highest average total payments were
+           New-York Presbyterian, Westchester Medical Center, Mount Sinai Hospital, Montefiore Medical Center, and Strong
+            """) 
 
 
 
@@ -309,10 +366,13 @@ st.dataframe(costs_condition_hospital)
 
 #----------Outpatient---------- 
 
-st.subheader('Outpatient')
+st.header('Outpatient')
 
+
+st.subheader('Top 10 Outpatient Services')
 df_bar2 = outpatient_ny[['provider_name','outpatient_services']]
-source2 = df_bar2[321:331]
+sorted2 = df_bar2.sort_values('outpatient_services')  ##sort
+source2 = df_bar2[1624:1632]
 
 bar2 = alt.Chart(source2).mark_bar().encode(
     x='provider_name',
@@ -333,6 +393,11 @@ bottom10 = common_discharges.tail(10)
 st.subheader('DRGs')
 st.dataframe(common_discharges)
 
+st.markdown("""
+           From the table above, we can conclude that most discharges in our sample 
+           are due to septicemia/severe sepsis, major joint replacement/reattachment of extremity,
+           heart failure, and digestive disorders.
+            """) 
 
 col1, col2 = st.beta_columns(2)
 
