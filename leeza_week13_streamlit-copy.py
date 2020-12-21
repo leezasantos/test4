@@ -308,7 +308,7 @@ st.markdown('The bar charts below displays inpatient hospitals with the highest 
 
 df_bar1 = inpatient_ny[['provider_name','total_discharges']]
 sorted = df_bar1.sort_values('total_discharges')  ##sort
-source1 = df_bar1[11247:11257]
+source1 = sorted[11247:11257]
  
 bar1 = alt.Chart(source1).mark_bar().encode(
     x='provider_name',
@@ -372,7 +372,7 @@ st.header('Outpatient')
 st.subheader('Top 10 Outpatient Services')
 df_bar2 = outpatient_ny[['provider_name','outpatient_services']]
 sorted2 = df_bar2.sort_values('outpatient_services')  ##sort
-source2 = df_bar2[1624:1632]
+source2 = sorted2[1624:1632]
 
 bar2 = alt.Chart(source2).mark_bar().encode(
     x='provider_name',
