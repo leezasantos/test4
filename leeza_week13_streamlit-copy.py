@@ -67,13 +67,20 @@ st.markdown("""
              Lastly, the third dataset is a list of outpatient facilities in NY, their services, and payments. 
              """)
 
+
+selectbar = st.selectbox('Select Dataset', ("Hospital Experience", "Inpatient", "Outpatient"))
+
 def get_dataset(selectbar):
     if selectbar == 'Hospital Experience':
         st.write(hospitals_ny)
-    if selectbar == 'Inpatient Facilities':
+    if selectbar == 'Inpatient':
         st.write(inpatient_ny)
-    if selectbar == 'Outpatient Facilities':
+    if selectbar == 'Outpatient':
         st.write(outpatient_ny)
+        
+st.write(get_dataset(selectbar))
+
+## selectbar https://youtu.be/Klqn--Mu2pE
     
 #----------Overview of NY Hospitals----------        
 
@@ -89,6 +96,17 @@ hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
 hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
 
 st.map(hospitals_ny_gps)
+
+
+# Create a list of possible values and multiselect menu with them in it.
+county = hospitals_ny['country_name'].unique()
+county_selected = st.multiselect('Select County', county)
+
+# Mask to filter dataframe
+mask_county = hospitals_ny['county_name'].isin(county_selected)
+
+county_selbar = hospitals_ny[mask_county]
+
 
 
 #----------Pie Chart----------  
